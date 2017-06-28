@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="MyApp" class="no-js">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>My AngularJS {{'app'}}</title>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+</head>
+<body style="padding:2rem;" >
+    <h1>Filters Example</h1>
+    <div ng-controller="FilterController">
+      {{name | reverse | uppercase}}
+    </div>
+
+
+
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+  <script>
+  (function () {
+    'use strict';
+
+    angular.module('MyApp',[])
+    .controller('FilterController',FilterController)
+    .filter('reverse',FilterFunction);
+
+    function FilterFunction(){
+      return function(input) {
+        input = input || '';
+        return input.split("").reverse().join("");
+      }
+    }
+
+    FilterController.$inject=['$scope'];
+
+    function FilterController($scope){
+      $scope.name='Juan'
+    }
+
+
+
+  })();
+
+  </script>
+
+</body>
+</html>

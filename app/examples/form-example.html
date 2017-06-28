@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="MyApp" class="no-js">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>My AngularJS {{'app'}}</title>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+</head>
+<body style="padding:2rem;" >
+    <h1>Form Example</h1>
+    <div ng-controller="FormController">
+      <form name="myForm" novalidate>
+        <label for="name">Name</label>
+        <input type="text" name="name" ng-model="User.name" value="" minlength="3" required>
+        <br>
+        <label>E-mail:</label>
+        <input type="email" ng-model="User.email" />
+        <br>
+        <button type="submit" name="button" ng-click="save()">Save</button>
+        <br>
+        {{myForm.$valid}}
+        {{User}}
+      </form>
+    </div>
+
+
+
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+  <script>
+  (function () {
+    'use strict';
+
+    angular.module('MyApp',[])
+    .controller('FormController',FormController);
+
+    FormController.$inject=['$scope'];
+
+    function FormController($scope){
+      $scope.UserSaved={};
+      $scope.User={};
+      $scope.save=function () {
+        console.log($scope.User);
+      }
+    }
+
+  })();
+
+  </script>
+
+</body>
+</html>

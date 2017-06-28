@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="MyApp" class="no-js">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>My AngularJS {{'app'}}</title>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+</head>
+<body style="padding:2rem;" >
+    <h1>Directive Example</h1>
+    <div ng-controller="MainController">
+      Directiva usada como elemento
+      <div>
+        <my-directive message="message" ></my-directive>
+      </div>
+      <hr>
+      Directiva usada como atributo
+      <div my-directive ></div>
+      <hr>
+      Directiva usada como clase
+      <div class="my-directive"></div>
+    </div>
+
+
+
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+  <script>
+  (function () {
+    'use strict';
+
+    angular.module('MyApp',[])
+    .controller('MainController',MainController);
+
+    MainController.$inject=['$scope'];
+
+    function MainController($scope){
+      $scope.controller='MainController';
+      $scope.message="texto definido en MainController"
+    }
+
+    //de aqui hacia abajo es parte de la directiva
+    angular.module('MyApp')
+    .controller('DirectiveController',DirectiveController)
+    .directive('myDirective',DirectiveFunction)
+
+    DirectiveController.$inject=['$scope'];
+
+    function DirectiveController($scope){
+      //  $scope.message='texto definido en DirectiveController';
+    }
+
+    function DirectiveFunction(){
+      return {
+        restrict:'AEC',
+        // scope:{
+        //   message:'='
+        // },
+        template:'Hola {{controller}} {{message}}',
+        // templateUrl:'./directive-example-view.html',
+        controller:DirectiveController
+      }
+    }
+
+
+
+  })();
+
+  </script>
+
+</body>
+</html>
