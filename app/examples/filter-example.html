@@ -11,7 +11,12 @@
 <body style="padding:2rem;" >
     <h1>Filters Example</h1>
     <div ng-controller="FilterController">
-      {{name | reverse | uppercase}}
+      {{name | reverse:true }}
+      {{name}}
+      <br>
+      {{lastName}}
+
+
     </div>
 
 
@@ -26,16 +31,22 @@
     .filter('reverse',FilterFunction);
 
     function FilterFunction(){
-      return function(input) {
+      return function(input,uppercase) {
         input = input || '';
-        return input.split("").reverse().join("");
+        input = input.split("").reverse().join("");
+        if(uppercase){
+          input= input.toUpperCase();
+        }
+        return input;
       }
     }
 
-    FilterController.$inject=['$scope'];
+    FilterController.$inject=['$scope','$filter'];
 
-    function FilterController($scope){
+    function FilterController($scope,$filter){
+      var filterReverese = $filter('reverse');
       $scope.name='Juan'
+      $scope.lastName= filterReverese('Perez',true);
     }
 
 

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="MyApp" class="no-js">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>My AngularJS {{'app'}}</title>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+</head>
+<body style="padding:2rem;" >
+    <h1>Promises Example</h1>
+    <div ng-controller="Controller1">
+      {{log}}
+      <button type="button" ng-click="sayHello()" name="button">Saluda</button>
+    </div>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+  <script>
+  (function () {
+    'use strict';
+
+    angular.module('MyApp',[])
+    .controller('Controller1',Controller1)
+
+    Controller1.$inject=['$scope','$q'];
+    function Controller1($scope,$q){
+      $scope.log='';
+      $scope.sayHello=function () {
+        var promise= sayHelloAsync('Juan');
+        promise.then(function (data) {
+          $scope.log=data;
+        },function (data) {
+          $scope.log=data;
+        })
+      }
+      function sayHelloAsync(name) {
+        var def= $q.defer();
+        setTimeout(function() {
+          if (name=='Juan') {
+            def.resolve('Hola, ' + name + '!');
+          } else {
+            def.reject('no saludo a ' + name + '.');
+          }
+        }, 4000);
+
+        return def.promise;
+      }
+
+    }
+
+
+
+  })();
+
+  </script>
+
+</body>
+</html>

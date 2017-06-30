@@ -9,14 +9,14 @@
 
 </head>
 <body style="padding:2rem;" >
-    <h1>Services Example</h1>
+    <h1>$http Example</h1>
     <div ng-controller="Controller1">
       <label for="name">Name</label>
       <input type="text" name="name" ng-model="user.name" value="">
       <label for="name">Edad</label>
       <input type="number" name="edad" ng-model="user.edad" value="">
 
-      <button type="button" ng-click="sayHello()" name="button">Saluda</button>
+      <button type="button" ng-click="loadUser()" name="button">Carga usuario</button>
     </div>
     <hr>
     <div ng-controller="Controller2">
@@ -35,14 +35,13 @@
     angular.module('MyApp',[])
     .controller('Controller1',Controller1)
     .controller('Controller2',Controller2)
-    .factory('myFactory',factoryFunction)
-    .service('myService',serviceFunction);
+    .factory('myFactory',factoryFunction);
 
     Controller1.$inject=['$scope','myFactory'];
     function Controller1($scope,myFactory){
       $scope.user=myFactory.user;
-      $scope.sayHello=function () {
-        myFactory.sayHello();
+      $scope.loadUser=function () {
+        myFactory.loadUser();
       }
     }
     Controller2.$inject=['$scope','myFactory'];
@@ -52,18 +51,26 @@
         myFactory.sayHello();
       }
     }
-    function factoryFunction() {
+    factoryFunction.$inject=['$http']
+    function factoryFunction($http) {
       return {
-        user:{name:'Juan',edad:12},
+        user:{name:undefined,edad:undefined},
+        loadUser:function () {
+          var self = this;
+          $http({
+            method:'GET',
+            url:'./user.json'
+          }).then(function (res) {
+              self.user.name=res.data.name;
+              self.user.edad=res.data.edad;
+            },function (res) {
+              alert(res)
+            }
+          )
+        },
         sayHello:function () {
           alert('Hi!');
         }
-      }
-    }
-    function serviceFunction() {
-      this.user = {name:'Juan',edad:12},
-      this.sayHello=function () {
-        alert('Hi!');
       }
     }
 

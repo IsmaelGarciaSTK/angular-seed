@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="MyApp" class="no-js">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>My AngularJS {{'app'}}</title>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+</head>
+<body style="padding:2rem;" >
+    <h1>Routing Example</h1>
+    <ul class="menu">
+      <li><a href="#!/main">Principal</a></li>
+      <li><a href="#!/other">Otra</a></li>
+    </ul>
+
+    <div ng-view></div>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular-route.js"></script>
+  <script>
+  (function () {
+    'use strict';
+
+    angular.module('MyApp',['ngRoute'])
+    .controller('Controller1',Controller1)
+    .controller('Controller2',Controller2)
+    .config(ConfigFunction);
+    ConfigFunction.$inject=['$routeProvider','$locationProvider']
+    function ConfigFunction($routeProvider,$locationProvider) {
+      $routeProvider
+      .when('/main', {
+        templateUrl: './main-view.html',
+        controller:'Controller1'
+      })
+      .when('/other', {
+        templateUrl: './other-view.html',
+        controller:'Controller2'
+      })
+      .otherwise({redirectTo: '/main'});
+    }
+
+    Controller1.$inject=['$scope'];
+    function Controller1($scope){
+
+    }
+    Controller2.$inject=['$scope','$location'];
+    function Controller2($scope,$location){
+      $scope.changeLocation=function () {
+        $location.path('!/main');
+      }
+    }
+
+
+
+  })();
+
+  </script>
+
+</body>
+</html>

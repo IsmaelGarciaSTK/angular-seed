@@ -1,0 +1,12 @@
+<div>
+  <form name="myForm" novalidate>
+    <label for="name">Name</label>
+    <input type="text" name="name" ng-model="user.name" value="" minlength="3" required>
+    <br>
+    <label>E-mail:</label>
+    <input type="email" ng-model="user.email" />
+    <br>
+    <button type="submit" name="button" ng-click="save()">Save</button>
+    <br>
+  </form>
+</div>
